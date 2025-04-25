@@ -16,6 +16,12 @@
     {% block css_files %}{% endblock %}
   </head>
   <body>
+    <header id="main-navigation">
+      <h1><a href="{% url "starting-page" %}">William's Blog</a></h1>
+      <nav>
+        <a href="{% url "posts-page" %}">All posts</a>
+      </nav>
+    </header>
     <!-- Contenuto principale -->
     {% block content %}{% endblock %}
   </body>
