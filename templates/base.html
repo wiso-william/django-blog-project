@@ -1,0 +1,22 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Titolo dinamico -->
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- CSS globale -->
+    <link rel="stylesheet" href="{% static 'app.css' %}" />
+
+    <!-- CSS specifici dei singoli template -->
+    {% block css_files %}{% endblock %}
+  </head>
+  <body>
+    <!-- Contenuto principale -->
+    {% block content %}{% endblock %}
+  </body>
+</html>
