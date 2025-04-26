@@ -12,7 +12,7 @@ class Tag(models.Model):
 class Author(models.Model):
     first_name = models.CharField(max_length=100) 
     last_name = models.CharField(max_length=100)
-    email_adress = models.EmailField() #automatic validator
+    email_address = models.EmailField() #automatic validator
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
     def __str__(self):
