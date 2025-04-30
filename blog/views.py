@@ -1,22 +1,39 @@
+from typing import List
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, DetailView
+
 from .models import Post
 
 # Create your views here.
-def starting_page(req):
-    latest_posts = Post.objects.all().order_by("-date")[:3] # perchè le prime 3? Perchè sto sortando in descending order,that's why eheh
-    return render(req, "blog/index.html", {
-        "posts" : latest_posts
-    })
+class StartingPageView(ListView):
+    template_name = "blog/index.html"
+    model = Post
+    ordering = ["-date"]
+    context_object_name = "posts"
 
-def posts(req):
-    all_posts = Post.objects.all().order_by("-date")
-    return render(req, "blog/all-posts.html",{
-        "all_posts" : all_posts
-    })
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        data = queryset[:3]
+        return data
 
-def post_detail(req, slug):
-    identified_post = get_object_or_404(Post, slug=slug)
-    return render(req, "blog/post-details.html", {
-        "post" : identified_post,
-        "tags" : identified_post.tags.all()
-    })
+
+class AllPostsView(ListView):
+    template_name = "blog/all-posts.html"
+    context_object_name = "all_posts"
+    model = Post
+    ordering = ["-date"]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset
+
+
+
+class SinglePostView(DetailView):
+    template_name = "blog/post-details.html"
+    model = Post 
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["tags"] = self.object.tags.all()
+        return context
